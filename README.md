@@ -10,6 +10,14 @@ the target environment `.gitignore` will be downloaded from [guthub](https://git
 Create a `.gitignore` file in the current directory.
 If a `.gitignore` file already exists, it will not be overwritten.
 
+## Install
+
+```
+$ go install github.com/sharkattack51/getgitignore@latest
+```
+
+or [download release](https://github.com/sharkattack51/getgitignore/releases)
+
 ## Usage
 
 ```
