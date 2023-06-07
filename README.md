@@ -23,7 +23,7 @@ or [download release](https://github.com/sharkattack51/getgitignore/releases)
 ```
 $ [~/Desktop] mkdir test
 $ [~/Desktop] cd ./test
-$ [~/Desktop/test] gitignore unity
+$ [~/Desktop/test] getgitignore unity
 getgitignore: [success] /Users/sharkattack51/Desktop/test/.gitignore
 ```
 
