@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/iancoleman/strcase"
 )
@@ -14,6 +15,7 @@ var (
 	GITIGNORE_FILE       = ".gitignore"
 	GITHUB_GITIGNORE_URL = "https://raw.githubusercontent.com/github/gitignore/main/%v.gitignore"
 	_404                 = "404: Not Found"
+	APPEND_TO_IGNORES    = []string{".DS_Store"}
 )
 
 func main() {
@@ -24,11 +26,28 @@ func main() {
 			Println("fail", err.Error())
 		} else {
 			if !IsExist(GITIGNORE_FILE) {
-				bytes, _ := ioutil.ReadAll(resp.Body)
+				bytes, _ := io.ReadAll(resp.Body)
 				if string(bytes) == _404 {
 					Println("fail", _404)
 				} else {
-					err = ioutil.WriteFile(GITIGNORE_FILE, bytes, 0666)
+					strs := string(bytes)
+
+					// append ignores
+					b := false
+					for _, ig := range APPEND_TO_IGNORES {
+						if !strings.Contains(strs, ig) {
+							if !b {
+								b = true
+								strs = strings.TrimRight(strs, " ")
+								strs = strings.TrimRight(strs, "\n")
+								strs += "\n\n# Append Ignores\n"
+							}
+
+							strs += (ig + "\n")
+						}
+					}
+
+					err = os.WriteFile(GITIGNORE_FILE, []byte(strs), 0666)
 					if err != nil {
 						Println("fail", err.Error())
 					} else {
