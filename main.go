@@ -21,8 +21,14 @@ var (
 
 func main() {
 	if len(os.Args) >= 2 {
-		lang := strcase.ToCamel(os.Args[1])
-		resp, err := http.Get(fmt.Sprintf(GITHUB_GITIGNORE_URL, lang))
+		lang := os.Args[1]
+		if !strings.Contains(lang, "/") {
+			lang = strcase.ToCamel(lang)
+		}
+		url := fmt.Sprintf(GITHUB_GITIGNORE_URL, lang)
+		Println("info", "DL from "+url)
+
+		resp, err := http.Get(url)
 		if err != nil {
 			Println("fail", err.Error())
 		} else {
