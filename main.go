@@ -14,8 +14,9 @@ import (
 var (
 	GITIGNORE_FILE       = ".gitignore"
 	GITHUB_GITIGNORE_URL = "https://raw.githubusercontent.com/github/gitignore/main/%v.gitignore"
-	_404                 = "404: Not Found"
 	APPEND_TO_IGNORES    = []string{".DS_Store"}
+
+	_404 = "404: Not Found"
 )
 
 func main() {
